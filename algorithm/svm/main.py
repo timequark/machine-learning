@@ -34,7 +34,7 @@ class SVMSample:
         
         # matplotlib.use('TkAgg')
         
-        self.X, self.y = make_circles(noise=0.2, factor=0.5, random_state=1)
+        self.X, self.y = make_circles(n_samples=(100, 50), noise=0.2, factor=0.5, random_state=1)
         self.X = StandardScaler().fit_transform(self.X)
         
         cm = plt.cm.RdBu
@@ -43,9 +43,11 @@ class SVMSample:
 
         ax.set_title("Input data")
         # Plot the training points
-        ax.scatter(self.X[:, 0], self.X[:, 1], c=self.y, cmap=cm_bright)
-        ax.set_xticks(())
-        ax.set_yticks(())
+        self.xserials = self.X[:, 0]
+        self.yserials = self.X[:, 1]
+        ax.scatter(self.xserials, self.yserials, c=self.y, cmap=cm_bright)
+        ax.set_xticks(range(int(self.xserials.min() - 1), int(self.xserials.max() + 1)))
+        ax.set_yticks(range(int(self.yserials.min() - 1), int(self.yserials.max() + 1)))
         plt.tight_layout()
         plt.show()
 
@@ -59,8 +61,8 @@ class SVMSample:
         logging.info("The best parameters are {} with a score of {:0.2f}".format(grid.best_params_, grid.best_score_))
     
     def lookSVCs(self):
-        x_min, x_max = self.X[:, 0].min() - 1, self.X[:, 0].max() + 1
-        y_min, y_max = self.X[:, 1].min() - 1, self.X[:, 1].max() + 1
+        x_min, x_max = self.xserials.min() - 1, self.xserials.max() + 1
+        y_min, y_max = self.yserials.min() - 1, self.yserials.max() + 1
         xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02), np.arange(y_min, y_max, 0.02))
         
         for i, C in enumerate((0.1, 1, 10)):
