@@ -34,7 +34,7 @@ class SVMSample:
         
         # matplotlib.use('TkAgg')
         
-        self.X, self.y = make_circles(n_samples=(100, 50), noise=0.2, factor=0.5, random_state=1)
+        self.X, self.y = make_circles(n_samples=(100, 100), noise=0.2, factor=0.5, random_state=1)
         self.X = StandardScaler().fit_transform(self.X)
         
         cm = plt.cm.RdBu
