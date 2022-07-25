@@ -38,14 +38,14 @@ class SVMSample:
         self.X = StandardScaler().fit_transform(self.X)
         
         cm = plt.cm.RdBu
-        cm_bright = ListedColormap(['#FF0000', '#0000FF'])
+        self.cm_bright = ListedColormap(['#FF0000', '#0000FF'])
         ax = plt.subplot()
 
         ax.set_title("Input data")
         # Plot the training points
         self.xserials = self.X[:, 0]
         self.yserials = self.X[:, 1]
-        ax.scatter(self.xserials, self.yserials, c=self.y, cmap=cm_bright)
+        ax.scatter(self.xserials, self.yserials, c=self.y, cmap=self.cm_bright)
         ax.set_xticks(range(int(self.xserials.min() - 1), int(self.xserials.max() + 1)))
         ax.set_yticks(range(int(self.yserials.min() - 1), int(self.yserials.max() + 1)))
         plt.tight_layout()
@@ -82,12 +82,21 @@ class SVMSample:
                 '''
                 Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 
+                '''
+                reshape 一维转多维 [https://numpy.org/doc/stable/reference/generated/numpy.reshape.html]
+                reshaper后的 Z 为xx.shape维的Z值
+                '''
                 # Put the result into a color plot
                 Z = Z.reshape(xx.shape)
+                
+                '''
+                (x, y) ->(z) , z 为预测值
+                类似于画出等高线 [https://blog.csdn.net/lens___/article/details/83960810]
+                '''
                 plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.8)
 
                 # Plot also the training points
-                plt.scatter(self.X[:, 0], self.X[:, 1], c=self.y, cmap=plt.cm.coolwarm)
+                plt.scatter(self.xserials, self.yserials, c=self.y, cmap=self.cm_bright)
 
                 plt.xlim(xx.min(), xx.max())
                 plt.ylim(yy.min(), yy.max())
