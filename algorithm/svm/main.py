@@ -95,8 +95,12 @@ class SVMSample:
                 '''
                 plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.8)
 
+                '''
+                pyplot.scatter
+                https://blog.csdn.net/yuan_xiangjun/article/details/119514811
+                '''
                 # Plot also the training points
-                plt.scatter(self.xserials, self.yserials, c=self.y, cmap=self.cm_bright)
+                plt.scatter(self.xserials, self.yserials, c=self.y, cmap=self.cm_bright, marker='x')
 
                 plt.xlim(xx.min(), xx.max())
                 plt.ylim(yy.min(), yy.max())
