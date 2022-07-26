@@ -72,7 +72,12 @@ class SVMSample:
         for i, C in enumerate((0.1, 1, 10)):
             for j, gamma in enumerate((1, 0.1, 0.01)):
                 plt.subplot()
-                clf = SVC(C=C, gamma=gamma)
+                '''
+                kernel
+                常见的几中核函数 [https://blog.csdn.net/bingbangx/article/details/107857928]
+                    - rbf [https://blog.csdn.net/qq_36264495/article/details/88316482]
+                '''
+                clf = SVC(C=C, gamma=gamma, kernel='rbf')
                 clf.fit(self.X, self.y)
                 '''
                 ravel 降为一维 [https://blog.csdn.net/hanshuobest/article/details/78882425]
