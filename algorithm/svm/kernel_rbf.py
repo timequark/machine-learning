@@ -14,7 +14,7 @@ from matplotlib.colors import ListedColormap
 https://www.cnblogs.com/pinard/p/6126077.html
 '''
 
-__all__ = ['SVMSample']
+__all__ = ['KernelRBFSample']
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s %(name)s %(levelname)s %(message)s",
@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.INFO,
 
 logging.info(matplotlib.get_backend())
 
-class SVMSample:
+class KernelRBFSample:
     
     def __init__(self):
         self.X = None
@@ -34,7 +34,7 @@ class SVMSample:
         
         # matplotlib.use('TkAgg')
         
-        self.X, self.y = make_circles(n_samples=(100, 100), noise=0.2, factor=0.5, random_state=1)
+        self.X, self.y = make_moons(n_samples=(100, 100), noise=0.2, random_state=1)
         self.X = StandardScaler().fit_transform(self.X)
         
         cm = plt.cm.RdBu
@@ -70,7 +70,7 @@ class SVMSample:
         xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.02), np.arange(y_min, y_max, 0.02))
         
         for i, C in enumerate((0.1, 1, 10)):
-            for j, gamma in enumerate((1, 0.1, 0.01)):
+            for j, gamma in enumerate((10, 1, 0.1, 0.01)):
                 plt.subplot()
                 '''
                 kernel
@@ -119,9 +119,10 @@ class SVMSample:
                 logging.info('')
     
 if __name__ == '__main__':
-    sample = SVMSample()
+    sample = KernelRBFSample()
     sample.setup(option={})
     # sample.lookSVCBest()
     sample.lookSVCs()
+    sample.teardown()
     
     logging.info('over')
