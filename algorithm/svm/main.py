@@ -78,6 +78,11 @@ class SVMSample:
                     - rbf [https://blog.csdn.net/qq_36264495/article/details/88316482]
                 SVC 参数
                 https://blog.csdn.net/qq_37007384/article/details/88410998
+                
+                高斯核
+                有人说，高斯核函数的本质是将每一个样本点映射到一个无穷维的特征空间
+                http://t.zoukankan.com/jokingremarks-p-14337248.html
+                https://zhuanlan.zhihu.com/p/258047472
                 '''
                 clf = SVC(C=C, gamma=gamma, kernel='rbf')
                 clf.fit(self.X, self.y)
