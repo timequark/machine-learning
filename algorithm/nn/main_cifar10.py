@@ -27,6 +27,13 @@ https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsCl
 
 '''
 
+'''
+
+测试结论：
+    直方图太吃内存，准确率低！
+
+'''
+
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s %(name)s %(levelname)s %(message)s",
                     datefmt = '%Y-%m-%d  %H:%M:%S %a'    #注意月份和天数不要搞乱了，这里的格式化符与time模块相同

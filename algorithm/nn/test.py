@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 from sklearn import datasets, svm
 from sklearn.svm import SVC
 from sklearn.datasets import make_moons, make_circles, make_classification
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import GridSearchCV
+from keras.utils.np_utils import to_categorical
 from matplotlib.colors import ListedColormap
 from sklearn.neural_network import MLPClassifier
 import cv2  
@@ -24,6 +25,12 @@ logging.basicConfig(level=logging.INFO,
 直方图是对图像的中的像素点的值进行统计，一般情况下直方图都是灰度图像，
 直方图x轴是灰度值（一般0~255），y轴就是图像中每一个灰度级对应的像素点的个数，
 即横坐标表示图像中各个像素点的灰度级，纵坐标表示具有该灰度级的像素个数。
+
+OpenCV实现傅里叶变换与傅里叶逆变换
+- 高通滤波器将提取图像的边缘轮廓
+- 低通滤波器是指通过低频的滤波器，衰减高频而通过低频，常用于模糊图像。
+    低通滤波器与高通滤波器相反，当一个像素与周围像素的插值小于一个特定值时，平滑该像素的亮度，常用于去燥和模糊化处理。
+    如PS软件中的高斯模糊，就是常见的模糊滤波器之一，属于削弱高频信号的低通滤波器。低通滤波器中心区域为白色255，其他区域为黑色0。
 
 图片直方图
 https://blog.csdn.net/asialee_bird/article/details/109526930
@@ -89,9 +96,28 @@ def test_image_equalize(name, img_path):
     
     plt.show()
 
+def test_tensor(name, img_path):
+    X = []
+    y_label = []
+    
+    img_bgr = cv2.imread(img_path, cv2.IMREAD_COLOR) # OpenCV里彩色图片加载时是按照BGR的顺序
+    X.append(np.array(img_bgr))
+    y_label.append('girl')
+    y_label.append('boy')
+    y_label.append('cat')
+    
+    label_encoder = LabelEncoder()
+    y = label_encoder.fit_transform(y_label) # 标签编码
+    y = to_categorical(y) # 将标签转换为One-hot编码
+    X = np.array(X) # 将X从列表转换为张量数组
+    X = X/255 # 将X张量归一化
+    
+    logging.info('')
+    
 if __name__ == '__main__':
     imgfile = 'C:/Users/Administrator/Pictures/00.jpg'
     # test_hist('', imgfile)
-    test_mask(imgfile)
+    # test_mask(imgfile)
     # test_image_equalize('', imgfile)
+    test_tensor('', imgfile)
     logging.info('over')

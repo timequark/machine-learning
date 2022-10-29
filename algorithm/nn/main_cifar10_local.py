@@ -32,6 +32,13 @@ https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsCl
 
 '''
 
+'''
+
+测试结论：
+    直方图太吃内存，准确率低！
+
+'''
+
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s %(name)s %(levelname)s %(message)s",
                     datefmt = '%Y-%m-%d  %H:%M:%S %a'    #注意月份和天数不要搞乱了，这里的格式化符与time模块相同
@@ -90,7 +97,7 @@ def test(cifar10Dir):
         
         # 图像像素大小一致
         # img = cv2.resize(image, (256, 256), interpolation=cv2.INTER_CUBIC)
- 
+        
         # 计算图像直方图并存储至X数组
         # channels : [0, 1, 2], 表示 G/B/R 3通道
         # hist = cv2.calcHist([image], [0, 1, 2], None, [256, 256, 256], [0.0, 255.0, 0.0, 255.0, 0.0, 255.0])
@@ -129,5 +136,5 @@ if __name__ == '__main__':
     # import dpctl
     # conf = get_config()
     # with config_context(target_offload="gpu:0"):
-    test('/data-warehouse/machine-learning-dataset/cifar-10/train')
+    test('F:/data-warehouse/machine-learning-dataset/cifar-10/train')
     logging.info('over')
